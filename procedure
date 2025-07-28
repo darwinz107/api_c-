@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerGastoTotal`(IN cedula INT, OUT resultado DECIMAL(10,2))
+begin
+  
+ SELECT SUM(d.quantity * d.priceSale) 
+ INTO resultado
+ FROM dbdar.receipt as r
+ inner join dbdar.customer as c on r.fkcustomerID = c.customerID 
+ inner join dbdar.detail as d on d.fkreceipt = r.receiptID
+ where c.cedula = cedula;
+ END
