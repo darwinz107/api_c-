@@ -1,0 +1,14 @@
+using System.Xml.Serialization;
+namespace MvcMovie.Models;
+
+
+public class ProcedureInsertar
+{
+   
+    [XmlElement("Numero de factura")]
+    public int numFactura { get; set; }
+    [XmlElement("Fecha")]
+    public DateTime fecha { get; set; }
+   
+    
+}

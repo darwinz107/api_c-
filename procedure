@@ -8,3 +8,35 @@ begin
  inner join dbdar.detail as d on d.fkreceipt = r.receiptID
  where c.cedula = cedula;
  END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `nathaly_zhinin_ingresarFactura`(IN cantidad int, IN precio decimal(10,2),IN cedula int)
+BEGIN
+declare reciboID int;
+declare clienteID int;
+
+insert into dbdar.customer(cedula)
+values(cedula);
+
+select c.customerID
+into clienteID
+from dbdar.customer as c
+where c.cedula = cedula;
+
+insert into dbdar.receipt(receiptDate,fkcustomerID)
+values(curdate(),clienteID);
+
+select r.receiptID
+into reciboID
+from dbdar.receipt as r
+where r.fkcustomerID = clienteID
+limit 1
+;
+
+insert into dbdar.detail(fkreceipt,quantity,priceSale)
+values(reciboID,cantidad,precio);
+
+select r.receiptID,r.receiptDate from dbdar.receipt as r
+where r.fkcustomerID = clienteID;
+
+END

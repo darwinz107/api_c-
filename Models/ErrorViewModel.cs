@@ -1,7 +1,10 @@
+using System.Xml.Serialization;
 namespace MvcMovie.Models;
 
+[XmlRoot("Resultado")]
 public class ErrorViewModel
 {
-    public int Cedula { get; set; }
+    [XmlElement("Gastos totales")]
+    public decimal gasto { get; set; }
 
 }

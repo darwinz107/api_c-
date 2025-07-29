@@ -1709,24 +1709,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\darwi\\.nuget\\packages\\": {}
+    "C:\\Users\\EFICAZ\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\darwi\\MvcMovie\\MvcMovie.csproj",
+      "projectUniqueName": "C:\\Users\\EFICAZ\\Desktop\\api_c-\\MvcMovie.csproj",
       "projectName": "MvcMovie",
-      "projectPath": "C:\\Users\\darwi\\MvcMovie\\MvcMovie.csproj",
-      "packagesPath": "C:\\Users\\darwi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\darwi\\MvcMovie\\obj\\",
+      "projectPath": "C:\\Users\\EFICAZ\\Desktop\\api_c-\\MvcMovie.csproj",
+      "packagesPath": "C:\\Users\\EFICAZ\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\EFICAZ\\Desktop\\api_c-\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\darwi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\EFICAZ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

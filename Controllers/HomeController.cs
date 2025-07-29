@@ -11,19 +11,19 @@ namespace MvcMovie.Controllers;
 [Route("app/xd")]
 public class HomeController : Controller
 {
-      const string connectionString =
-            "Server=localhost;Database=dbdar;"
-            + "Uid=root;Pwd=root;";
+    const string connectionString =
+          "Server=localhost;Database=dbdar;"
+          + "Uid=root;Pwd=root;";
 
-    [HttpGet]
+    [HttpGet("{ced}")]
     [Produces("application/xml")]
-    public IActionResult GetGastos([FromBody] ErrorViewModel body )
+    public IActionResult GetGastos(int ced)
     {
-        int cedula = body.Cedula;
+        int cedula = ced;
         decimal total = 0;
-        
+       
 
-        using ( MySqlConnection connection = new MySqlConnection(connectionString))
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             MySqlCommand command = new MySqlCommand("obtenerGastoTotal", connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -48,14 +48,57 @@ public class HomeController : Controller
                 throw;
 
             }
+        }
+        ErrorViewModel errorViewModel = new ErrorViewModel();
+        errorViewModel.gasto = total;
+
+        return Ok(errorViewModel);
+
     }
-        var listGastos = new List<ProcedureResultsModel>();
-        listGastos.Add(new
-        ProcedureResultsModel{
-            TotalDeGastos = total
-        });
+
+    [HttpPost]
+    [Consumes("application/xml")]
+    [Produces("application/xml")]
+    public IActionResult insertarFactura([FromBody] ProcedureResultsModel procedureResultsModel)
+    {
+
+        var listRecibos = new List<object>();
         
- return Ok(listGastos);
-       
+        FacturasList facturas = new FacturasList();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("nathaly_zhinin_ingresarFactura", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@cantidad", procedureResultsModel.cantidad);
+                command.Parameters.AddWithValue("@precio", procedureResultsModel.precio);
+                command.Parameters.AddWithValue("@cedula", procedureResultsModel.cedula);
+
+                connection.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ProcedureInsertar insertar = new ProcedureInsertar();
+                    insertar.numFactura = reader.GetInt16(0);
+                    insertar.fecha = reader.GetDateTime(1);
+
+                    facturas.facturas.Add(insertar);
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        
+        
+
+        return Ok(facturas);
     }
 }
