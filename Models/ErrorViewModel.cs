@@ -4,7 +4,7 @@ namespace MvcMovie.Models;
 [XmlRoot("Resultado")]
 public class ErrorViewModel
 {
-    [XmlElement("Gastos totales")]
+    [XmlElement("GastosTotales")]
     public decimal gasto { get; set; }
 
 }

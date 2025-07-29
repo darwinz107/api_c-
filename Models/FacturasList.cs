@@ -1,7 +1,7 @@
 using System.Xml.Serialization;
 namespace MvcMovie.Models;
 
-[XmlRoot("Facturas ingresadas")]
+[XmlRoot("FacturasIngresadas")]
 public class FacturasList
 {
     [XmlElement("Factura")]
