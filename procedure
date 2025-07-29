@@ -40,3 +40,13 @@ select r.receiptID,r.receiptDate from dbdar.receipt as r
 where r.fkcustomerID = clienteID;
 
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recaudadoPorFecha`(IN fecha date,out resultado decimal(10,2))
+BEGIN
+select sum(d.quantity * priceSale)
+into resultado
+from dbdar.receipt as r
+inner join dbdar.detail as d on r.receiptID = d.fkreceipt
+where r.receiptDate = fecha;
+END

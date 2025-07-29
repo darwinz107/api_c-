@@ -15,13 +15,13 @@ public class HomeController : Controller
           "Server=localhost;Database=dbdar;"
           + "Uid=root;Pwd=root;";
 
-    [HttpGet("{ced}")]
+    [HttpGet("cedula/{ced}")]
     [Produces("application/xml")]
     public IActionResult GetGastos(int ced)
     {
         int cedula = ced;
         decimal total = 0;
-       
+
 
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -63,7 +63,7 @@ public class HomeController : Controller
     {
 
         var listRecibos = new List<object>();
-        
+
         FacturasList facturas = new FacturasList();
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -96,9 +96,43 @@ public class HomeController : Controller
                 throw;
             }
         }
-        
-        
+
+
 
         return Ok(facturas);
     }
+
+    [HttpGet("fecha/{fecha}")]
+    [Produces("application/xml")]    
+    public IActionResult ObtenerPorFecha(DateTime fecha)
+{
+    RecaudadoPorFecha recaudadoPorFecha = new RecaudadoPorFecha();
+     try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+
+                MySqlCommand command = new MySqlCommand("recaudadoPorFecha", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@fecha", fecha);
+
+                MySqlParameter parameter = new MySqlParameter("resultado", MySqlDbType.Decimal);
+                parameter.Direction = System.Data.ParameterDirection.Output;
+                command.Parameters.Add(parameter);
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+                recaudadoPorFecha.total = (decimal)command.Parameters["resultado"].Value;
+
+            }
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
+        return Ok(recaudadoPorFecha);
+}
 }
